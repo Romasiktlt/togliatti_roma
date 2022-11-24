@@ -9,8 +9,8 @@ class MyWidget(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi('UI.ui', self)
-        print(1)
         self.pushButton.clicked.connect(self.paint)
+        self.do_paint = False
 
     def paintEvent(self, event):
         if self.do_paint:
@@ -18,16 +18,16 @@ class MyWidget(QWidget):
             qp.begin(self)
             self.drawing(qp)
             qp.end()
-            self.do_paint = False
+        self.do_paint = False
 
     def paint(self):
         self.do_paint = True
-        print(2)
         self.repaint()
 
     def drawing(self, qp):
         qp.setBrush(QColor(255, 255, 0))
-        qp.drawEllipse(random.randrange(250))
+        diameter = random.randrange(300)
+        qp.drawEllipse(random.randrange(200), random.randrange(200), diameter, diameter)
 
 
 if __name__ == '__main__':
